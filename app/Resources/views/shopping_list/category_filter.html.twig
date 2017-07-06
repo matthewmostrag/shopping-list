@@ -1,0 +1,5 @@
+{% for product in products %}
+    {{ include("shopping_list/list_item.html.twig", {"product": product}) }}
+{% else %}
+    <li class="default">Votre liste ne contient pas de produits dans cette catégorie.</li>
+{% endfor %}

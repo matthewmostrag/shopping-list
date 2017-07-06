@@ -180,4 +180,52 @@ class ShoppingListController extends AbstractController
 
         return $this->redirectToRoute("lists_add_products", ["list" => $list->getId()]);
     }
+
+    /**
+     * @Route("listes/{list}/supprimer-categorie/{category}", name="lists_remove_category", requirements={"list": "\d*", "category": "\d*"}, options={"expose": true})
+     */
+    public function removeCategoryAction(ShoppingList $list, Category $category)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $products = $list->getProducts();
+
+        foreach ( $products as $product )
+        {
+            if ( $product->getCategory() == $category )
+            {
+                $list->removeProduct($product);
+            }
+        }
+
+        $em->persist($list);
+        $em->flush();
+
+        return $this->redirectToRoute("lists_add_products", ["list" => $list->getId()]);
+    }
+
+    /**
+     * @Route("/listes/{list}/filtre-categorie", name="lists_category_filter", requirements={"list": "\d*"}, methods={"POST"}, options={"expose": true})
+     */
+    public function categoryFilterAction(ShoppingList $list, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $categoryRepository = $em->getRepository("AppBundle:Category");
+
+        $products = $list->getProducts();
+        $category = $request->get("category");
+
+        if ( !empty($category) )
+        {
+            $category = $categoryRepository->find($category);
+
+            $products = array_filter($products->toArray(), function($value) use($category) {
+                return $value->getCategory() == $category;
+            });
+        }
+
+        return $this->render("shopping_list/category_filter.html.twig", array(
+            "products" => $products
+        ));
+    }
 }

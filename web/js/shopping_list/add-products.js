@@ -50,6 +50,8 @@ $(document).ready(function(){
                     $default.remove();
                 }
 
+                $('#categoryFilter').val("0").trigger('change');
+
                 if ( $item.parents('.list').is($('#search-results')) )
                 {
                     $('.list-category .list-item[data-id=' + product + ']').remove();
@@ -100,6 +102,29 @@ $(document).ready(function(){
         });
 
         return false;
+    });
+
+    $('#categoryFilter').change(function(){
+        var category = $(this).val();
+
+        $.ajax({
+            url: Routing.generate('lists_category_filter', {"list": list}),
+            type: 'POST',
+            data: {category: category},
+            success: function(data){
+                $('#products').html(data);
+
+                // If we have a category (!= 0) we edit the delete button to delete the products in the category
+                $link = $('#removeProducts');
+                if ( category != 0 ) {
+                    $link.attr("href", Routing.generate('lists_remove_category', {"list": list, "category": category}))
+                    $link.html('<i class="fa fa-trash"></i> Supprimer les produits de la catégorie');
+                } else {
+                    $link.attr("href", Routing.generate('lists_remove_all_products', {"list": list}))
+                    $link.html('<i class="fa fa-trash"></i> Supprimer tous les produits');
+                }
+            }
+        });
     });
 
 });
