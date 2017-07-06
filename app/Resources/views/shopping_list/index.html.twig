@@ -3,11 +3,16 @@
 {% block body %}
 
     {% for message in app.flashes("info") %}
-        <div>
+        <div class="notification">
             {{ message }}
         </div>
     {% endfor %}
 
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h2>Mes listes de courses</h2>
+        </div>
+    </div>
     <div class="row">
         {% for list in lists %}
             <div class="col-md-4 col-sm-12">
@@ -24,7 +29,7 @@
                     </div>
                     <div class="list-footer">
                         <a href="{{ path("lists_add_products", {"list": list.id}) }}">
-                            <i class="fa fa-pencil"></i> Modifier la liste
+                            <i class="fa fa-pencil"></i> Modifier
                         </a>
                     </div>
                 </div>

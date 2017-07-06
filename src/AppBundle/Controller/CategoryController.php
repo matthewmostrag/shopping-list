@@ -11,21 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/categories", name="categories_homepage")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $categoryRepository = $em->getRepository("AppBundle:Category");
-
-        $categories = $categoryRepository->findAll();
-
-        return $this->render("category/index.html.twig", array(
-            "categories" => $categories
-        ));
-    }
-
-    /**
      * @Route("/categories/ajouter", name="categories_add")
      */
     public function addAction(Request $request)
@@ -45,7 +30,7 @@ class CategoryController extends AbstractController
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute("categories_homepage");
+            return $this->redirectToRoute("homepage");
         }
 
         return $this->render("category/add.html.twig", array(

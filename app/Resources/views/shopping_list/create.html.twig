@@ -1,10 +1,12 @@
 {% extends("base.html.twig") %}
 
-{% block stylesheets %}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-{% endblock %}
-
 {% block body %}
+
+    {% for message in app.flashes("info") %}
+        <div class="notification">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     <div class="row">
         <div class="col-sm-12 text-center">

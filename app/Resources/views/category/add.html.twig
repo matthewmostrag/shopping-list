@@ -1,1 +1,15 @@
-{{ include("category/form.html.twig", {"form": form}) }}
+{% extends("base.html.twig") %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h2>Nouvelle catégorie</h2>
+
+            {{ include("category/form.html.twig", {"form": form}) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+

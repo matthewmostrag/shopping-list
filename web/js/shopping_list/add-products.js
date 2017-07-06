@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+    // Select2
     $('#appbundle_product_category, #categoryFilter').select2({
         placeholder: 'Catégorie',
         minimumResultsForSearch: Infinity
@@ -9,6 +10,7 @@ $(document).ready(function(){
     var $container = $('#products');
     var $default = $container.find('.default');
 
+    // Adding a new product
     $('form[name=appbundle_product]').submit(function(){
         var $form = $(this);
 
@@ -36,7 +38,9 @@ $(document).ready(function(){
         return false;
     });
 
+    // Adding an existing product from the categories to the list
     $('ul[id^=category-], #search-results').on('click', '.list-item .fa-plus', function(){
+        // The list item
         var $item= $(this).parent();
         var product = $item.attr('data-id');
 
@@ -50,8 +54,10 @@ $(document).ready(function(){
                     $default.remove();
                 }
 
+                // We reset the category filter
                 $('#categoryFilter').val("0").trigger('change');
 
+                // If we added the product from the research frame we need to remove it also from the categories frames
                 if ( $item.parents('.list').is($('#search-results')) )
                 {
                     $('.list-category .list-item[data-id=' + product + ']').remove();
@@ -66,11 +72,14 @@ $(document).ready(function(){
         });
     });
 
+    // Remove a product from the list
     $('#products').on('click', '.list-item .fa-remove', function(){
+        // The list item
         var $item = $(this).parent();
         var product = $item.attr('data-id');
 
         var category = $item.attr('data-category');
+        // The category container where to add the product
         var $container = $('#category-' + category);
 
         $.ajax({
@@ -87,7 +96,9 @@ $(document).ready(function(){
         });
     });
 
+    // Product research
     $('#productSearch').submit(function(){
+        // The search term
         var search = $('#search').val();
 
         $.ajax({
@@ -95,8 +106,10 @@ $(document).ready(function(){
             type: 'GET',
             data: {search: search},
             success: function(data){
+                // We display the search results container, hidden by default
                 $('#search-results').css("display", "block");
 
+                // We put the results in it
                 $('#search-results .list-content').html(data);
             }
         });
@@ -104,6 +117,7 @@ $(document).ready(function(){
         return false;
     });
 
+    // Category filter
     $('#categoryFilter').change(function(){
         var category = $(this).val();
 
@@ -120,6 +134,7 @@ $(document).ready(function(){
                     $link.attr("href", Routing.generate('lists_remove_category', {"list": list, "category": category}))
                     $link.html('<i class="fa fa-trash"></i> Supprimer les produits de la catégorie');
                 } else {
+                    // If the category is null we want to display them all, so we reset the link
                     $link.attr("href", Routing.generate('lists_remove_all_products', {"list": list}))
                     $link.html('<i class="fa fa-trash"></i> Supprimer tous les produits');
                 }

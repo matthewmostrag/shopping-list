@@ -1,1 +1,8 @@
-{{ form(form) }}
+{{ form_start(form) }}
+{{ form_errors(form) }}
+
+{{ form_widget(form.name, {"attr": {"placeholder": "Nom de la catégorie"}}) }}
+
+<button type="submit" class="btn btn-primary">Valider</button>
+
+{{ form_end(form) }}

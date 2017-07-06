@@ -4,3 +4,10 @@ fos_js_routing:
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+homepage:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /listes
+        permanent: true

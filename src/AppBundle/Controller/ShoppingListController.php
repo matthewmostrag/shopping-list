@@ -7,6 +7,7 @@ use AppBundle\Entity\Product;
 use AppBundle\Entity\ShoppingList;
 use AppBundle\Form\ProductType;
 use AppBundle\Form\ShoppingListType;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,10 +44,19 @@ class ShoppingListController extends AbstractController
 
         if ( $form->isSubmitted() && $form->isValid() )
         {
-            $em->persist($list);
-            $em->flush();
+            // We can't create multiple lists with the same name
+            try
+            {
+                $em->persist($list);
+                $em->flush();
 
-            return $this->redirectToRoute("lists_add_products", ["list" => $list->getId()]);
+                return $this->redirectToRoute("lists_add_products", ["list" => $list->getId()]);
+            }
+            catch (UniqueConstraintViolationException $e)
+            {
+                $this->addFlash("info", "Une liste existe déjà avec ce nom !");
+            }
+
         }
 
         return $this->render("shopping_list/create.html.twig", array(
@@ -192,6 +202,7 @@ class ShoppingListController extends AbstractController
 
         foreach ( $products as $product )
         {
+            // If the product is in the selected category we remove it
             if ( $product->getCategory() == $category )
             {
                 $list->removeProduct($product);
@@ -215,10 +226,12 @@ class ShoppingListController extends AbstractController
         $products = $list->getProducts();
         $category = $request->get("category");
 
+        // If we have a category (!= 0)
         if ( !empty($category) )
         {
             $category = $categoryRepository->find($category);
 
+            // We filter the array to only have the products from the right category
             $products = array_filter($products->toArray(), function($value) use($category) {
                 return $value->getCategory() == $category;
             });
