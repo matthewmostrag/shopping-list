@@ -29,7 +29,7 @@ class ShoppingList
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product", cascade={"persist"})
      */
     private $products;
 

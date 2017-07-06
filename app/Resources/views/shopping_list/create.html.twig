@@ -1,0 +1,24 @@
+{% extends("base.html.twig") %}
+
+{% block stylesheets %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h2>Commencez par donner un nom à votre liste</h2>
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_widget(form.name, {"attr": {"placeholder": "Nom de la liste"}}) }}
+
+            <button type="submit" class="btn btn-primary">Ajouter des produits à ma liste</button>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

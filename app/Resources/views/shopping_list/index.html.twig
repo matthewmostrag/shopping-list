@@ -1,0 +1,44 @@
+{% extends("base.html.twig") %}
+
+{% block body %}
+
+    {% for message in app.flashes("info") %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        {% for list in lists %}
+            <div class="col-md-4 col-sm-12">
+                <div class="list">
+                    <div class="list-header">
+                        {{ list.name }}
+                    </div>
+                    <div class="list-content">
+                        <ul>
+                            {% for product in list.products %}
+                                <li>{{ product.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="list-footer">
+                        <a href="#">
+                            <i class="fa fa-pencil"></i> Modifier la liste
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="col-md-4 col-sm-12">
+            <div class="add-list">
+                <a href="{{ path("lists_create") }}">
+                    <div class="vertical-center">
+                        <i class="fa fa-plus"></i> Créer une nouvelle liste
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

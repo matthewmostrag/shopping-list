@@ -1,0 +1,61 @@
+{% extends("base.html.twig") %}
+
+{% block stylesheets %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            {{ form_start(formList) }}
+            {{ form_errors(formList) }}
+
+            <input type="hidden" name="listId" id="listId" value="{{ list.id }}">
+
+            {{ form_widget(formList.name, {"attr": {"placeholder": "Nom de la liste", "class": "full-width"}}) }}
+
+            <div class="list long">
+                <div class="list-content">
+                    <ul id="products">
+                        {% for product in list.products %}
+                            <li>{{ product.name }}</li>
+                        {% else %}
+                            <li class="default">Votre liste est vide pour le moment, ajoutez des produits !</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">Sauvegarder ma liste</button>
+
+            {{ form_end(formList) }}
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Ajouter un nouveau produit</h2>
+                </div>
+                {{ form_start(formProduct) }}
+                {{ form_errors(formProduct) }}
+                <div class="col-sm-6">
+                    {{ form_widget(formProduct.name, {"attr": {"placeholder": "Nom du produit", "class": "full-width"}}) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(formProduct.category, {"attr": {"class": "full-width"}}) }}
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-primary no-margin">Ajouter</button>
+                </div>
+                {{ form_end(formProduct) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script type="text/javascript" src="{{ asset("js/shopping_list/add-products.js") }}"></script>
+{% endblock %}

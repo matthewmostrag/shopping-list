@@ -1,0 +1,208 @@
+* { box-sizing: border-box; }
+
+html { font-size: 62.5%; }
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-size: 1.6rem;
+    font-family: Roboto, sans-serif;
+}
+
+.vertical-center {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+h2 { margin: 0 0 2rem; }
+
+.no-margin { margin: 0!important; }
+.full-width { width: 100%; }
+
+/* HEADER */
+
+header {
+    padding: 2rem;
+    text-align: center;
+    color: #FFF;
+    margin-bottom: 4rem;
+
+    background: #FF512F;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #DD2476, #FF512F);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #DD2476, #FF512F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+header h1 {
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 1.5em;
+}
+
+header h1 .fa { margin-right: 1rem; }
+
+/* LISTS */
+
+.list {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+
+    margin-bottom: 4rem;
+}
+
+.list.long { margin-bottom: 0; }
+
+.list .list-header {
+    padding: 1rem;
+    color: #FFF;
+
+    -webkit-border-top-left-radius: 4px;
+    -moz-border-top-left-radius: 4px;
+    border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-top-right-radius: 4px;
+    border-top-right-radius: 4px;
+
+    background: #FF512F;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #DD2476, #FF512F);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #DD2476, #FF512F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.list .list-content ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+
+    height: 21.5rem;
+    overflow: scroll;
+
+    background: #F5F5F5;
+}
+
+.list.long .list-content {
+    margin-top: 2rem;
+}
+
+.list.long .list-content ul {
+    height: 43rem;
+}
+
+.list .list-content ul li {
+    padding: 1rem;
+    border-bottom: 1px solid #EEE;
+    background: #FFF;
+}
+
+.list .list-content ul li.default {
+    background: transparent;
+}
+
+.list .list-content ul li:hover {
+    background: #F5F5F5
+}
+
+.list .list-footer {
+    padding: 1rem;
+    text-align: center;
+}
+
+.list .list-footer a {
+    display: block;
+    color: #DD2476;
+}
+
+.list .list-footer a:hover {
+    text-decoration: none;
+    color: #FF512F;
+}
+
+.add-list {
+    height: 29.9rem;
+    background: #F5F5F5;
+    text-align: center;
+    font-size: 2em;
+    color: #555;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.add-list a {
+    color: inherit;
+    position: relative;
+    display: block;
+    height: 100%;
+}
+
+.add-list a div { padding: 0 20%; }
+
+.add-list .fa {
+    display: block;
+}
+
+/* FORMS */
+
+input[type=text] {
+    background: #F5F5F5;
+    padding: 1rem 2rem;
+    border: none;
+    outline: none;
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+select + span.select2-container .select2-selection--single,
+select + span.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 42px;
+    background: #F5F5F5;
+    border: none;
+}
+
+select + span.select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 42px; }
+
+/* BUTTONS */
+
+.btn {
+    margin: 2rem;
+    padding: 1rem 2rem;
+}
+
+.btn-full {
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.btn-primary {
+    background: #FF512F;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #DD2476, #FF512F);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #DD2476, #FF512F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+
+    border: none;
+}
