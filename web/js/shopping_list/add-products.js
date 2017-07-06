@@ -1,7 +1,8 @@
 $(document).ready(function(){
 
-    $('#appbundle_product_category').select2({
-        'placeholder': 'Catégorie'
+    $('#appbundle_product_category, #categoryFilter').select2({
+        placeholder: 'Catégorie',
+        minimumResultsForSearch: Infinity
     });
 
     var list = $('#listId').val();
@@ -35,9 +36,9 @@ $(document).ready(function(){
         return false;
     });
 
-    $('.addExistingProduct').click(function(){
-        var $this = $(this);
-        var product = $this.attr('data-id');
+    $('ul[id^=category-], #search-results').on('click', '.list-item .fa-plus', function(){
+        var $item= $(this).parent();
+        var product = $item.attr('data-id');
 
         $.ajax({
             url: Routing.generate('lists_add_existing_product', {'list': list}),
@@ -49,21 +50,26 @@ $(document).ready(function(){
                     $default.remove();
                 }
 
+                if ( $item.parents('.list').is($('#search-results')) )
+                {
+                    $('.list-category .list-item[data-id=' + product + ']').remove();
+                }
+
                 // We add the product to the list
                 $container.prepend(data);
 
                 // We remove the product so we can't add it again and throw an error
-                $this.remove();
+                $item.remove();
             }
         });
     });
 
-    $('.list-item .fa-remove').click(function(){
+    $('#products').on('click', '.list-item .fa-remove', function(){
         var $item = $(this).parent();
         var product = $item.attr('data-id');
 
         var category = $item.attr('data-category');
-        var $container = $('#category-' + category + ' .list-content ul');
+        var $container = $('#category-' + category);
 
         $.ajax({
             url: Routing.generate('lists_remove_product', {'list': list}),
@@ -77,6 +83,23 @@ $(document).ready(function(){
                 $item.remove();
             }
         });
+    });
+
+    $('#productSearch').submit(function(){
+        var search = $('#search').val();
+
+        $.ajax({
+            url: Routing.generate('products_search'),
+            type: 'GET',
+            data: {search: search},
+            success: function(data){
+                $('#search-results').css("display", "block");
+
+                $('#search-results .list-content').html(data);
+            }
+        });
+
+        return false;
     });
 
 });

@@ -15,6 +15,13 @@
 
             {{ form_widget(formList.name, {"attr": {"placeholder": "Nom de la liste", "class": "full-width"}}) }}
 
+            <select id="categoryFilter" name="categoryFilter" class="full-width">
+                <option value="0">Toutes les catégories</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+
             <div class="list long">
                 <div class="list-content">
                     <ul id="products">
@@ -24,6 +31,11 @@
                             <li class="default">Votre liste est vide pour le moment, ajoutez des produits !</li>
                         {% endfor %}
                     </ul>
+                </div>
+                <div class="list-footer">
+                    <a href="{{ path("lists_remove_all_products", {"list": list.id}) }}">
+                        <i class="fa fa-trash"></i> Supprimer tous les produits
+                    </a>
                 </div>
             </div>
 
@@ -54,16 +66,16 @@
                     <h2>Ajouter un produit existant</h2>
                 </div>
                 {% for category in categories %}
-                    <div class="col-sm-4" id="category-{{ category.id }}">
-                        <div class="list">
+                    <div class="col-sm-4">
+                        <div class="list list-category">
                             <div class="list-header">
                                 {{ category.name }}
                             </div>
                             <div class="list-content">
-                                <ul>
+                                <ul id="category-{{ category.id }}">
                                     {% for product in category.products %}
                                         {% if list.products.contains(product) == false %}
-                                            <li class="addExistingProduct" data-id="{{ product.id }}">{{ product.name }}</li>
+                                            {{ include("shopping_list/category_list_item.html.twig", {"product": product}) }}
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
@@ -71,6 +83,25 @@
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Rechercher un produit</h2>
+                </div>
+                <div class="col-sm-12">
+                    <form name="productSearch" method="GET" id="productSearch">
+                        <input type="text" name="search" id="search" placeholder="Rechercher un produit">
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </form>
+                </div>
+                <div class="col-sm-4">
+                    <div class="list" id="search-results">
+                        <div class="list-header">
+                            Résultats
+                        </div>
+                        <div class="list-content"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -72,7 +73,7 @@ class ShoppingList
      */
     public function __construct()
     {
-        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     /**
@@ -107,5 +108,10 @@ class ShoppingList
     public function getProducts()
     {
         return $this->products;
+    }
+
+    public function clearProducts()
+    {
+        $this->products = new ArrayCollection();
     }
 }

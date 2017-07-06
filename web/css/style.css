@@ -59,6 +59,15 @@ header h1 {
 
 header h1 .fa { margin-right: 1rem; }
 
+header a {
+    color: inherit;
+}
+
+header a:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
 /* LISTS */
 
 .list {
@@ -126,7 +135,8 @@ header h1 .fa { margin-right: 1rem; }
 
 .list .list-item { position: relative; }
 
-.list .list-item i.fa-remove {
+.list .list-item i.fa-remove,
+.list .list-item i.fa-plus {
     position: absolute;
     right: 1rem;
     top: 50%;
@@ -156,7 +166,8 @@ header h1 .fa { margin-right: 1rem; }
     transform: translateY(-50%);
 }
 
-.list .list-item i.fa-remove:hover { cursor: pointer; }
+.list .list-item i.fa-remove:hover,
+.list .list-item i.fa-plus:hover{ cursor: pointer; }
 
 .list .list-footer {
     padding: 1rem;
@@ -198,6 +209,8 @@ header h1 .fa { margin-right: 1rem; }
     display: block;
 }
 
+.list-category { margin-bottom: 0; }
+
 /* FORMS */
 
 input[type=text] {
@@ -224,6 +237,11 @@ select + span.select2-container--default .select2-selection--single .select2-sel
 
 select + span.select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 42px; }
 
+#productSearch { margin-bottom: 2rem; }
+#productSearch button {
+    margin: 0 2rem;
+}
+
 /* BUTTONS */
 
 .btn {
@@ -247,3 +265,9 @@ select + span.select2-container--default .select2-selection--single .select2-sel
 
     border: none;
 }
+
+/* COMPONENTS */
+
+#search-results { display: none; }
+
+#categoryFilter + span { margin-top: 2rem; }

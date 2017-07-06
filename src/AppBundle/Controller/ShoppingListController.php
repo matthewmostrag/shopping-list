@@ -165,4 +165,19 @@ class ShoppingListController extends AbstractController
             "product" => $product
         ));
     }
+
+    /**
+     * @Route("listes/{list}/supprimer-produits", name="lists_remove_all_products", requirements={"list": "\d*"}, options={"expose": true})
+     */
+    public function removeAllProductsAction(ShoppingList $list)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $list->clearProducts();
+
+        $em->persist($list);
+        $em->flush();
+
+        return $this->redirectToRoute("lists_add_products", ["list" => $list->getId()]);
+    }
 }
