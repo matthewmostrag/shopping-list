@@ -60,6 +60,9 @@ class ShoppingListController extends AbstractController
     public function addProductsAction(ShoppingList $list, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $categoryRepository = $em->getRepository("AppBundle:Category");
+
+        $categories = $categoryRepository->findAll();
 
         $formProduct = $this->createForm(ProductType::class);
         $formList = $this->createForm(ShoppingListType::class, $list);
@@ -79,7 +82,8 @@ class ShoppingListController extends AbstractController
         return $this->render("shopping_list/add_products.html.twig", array(
             "formProduct" => $formProduct->createView(),
             "formList"    => $formList->createView(),
-            "list"        => $list
+            "list"        => $list,
+            "categories"  => $categories
         ));
     }
 
@@ -112,6 +116,52 @@ class ShoppingListController extends AbstractController
         $em->flush();
 
         return $this->render("shopping_list/list_item.html.twig", array(
+            "product" => $product
+        ));
+    }
+
+    /**
+     * @Route("listes/{list}/produit-existant", name="lists_add_existing_product", requirements={"list": "\d*"}, methods={"POST"}, options={"expose": true})
+     */
+    public function addExistingProductAction(ShoppingList $list, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $productRepository = $em->getRepository("AppBundle:Product");
+
+        // We retrieve data to get the product
+        $product = $productRepository->find($request->get("product"));
+
+        // Then we add the existing product to the list
+        $list->addProduct($product);
+
+        $em->persist($list);
+
+        $em->flush();
+
+        return $this->render("shopping_list/list_item.html.twig", array(
+            "product" => $product
+        ));
+    }
+
+    /**
+     * @Route("listes/{list}/supprimer-produit", name="lists_remove_product", requirements={"list": "\d*"}, methods={"POST"}, options={"expose": true})
+     */
+    public function removeProductAction(ShoppingList $list, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $productRepository = $em->getRepository("AppBundle:Product");
+
+        // We retrieve the product
+        $product = $productRepository->find($request->get("product"));
+
+        // We remove the product from the list
+        $list->removeProduct($product);
+
+        $em->persist($list);
+
+        $em->flush();
+
+        return $this->render("shopping_list/category_list_item.html.twig", array(
             "product" => $product
         ));
     }

@@ -19,7 +19,7 @@
                 <div class="list-content">
                     <ul id="products">
                         {% for product in list.products %}
-                            <li>{{ product.name }}</li>
+                            {{ include("shopping_list/list_item.html.twig", {"product": product}) }}
                         {% else %}
                             <li class="default">Votre liste est vide pour le moment, ajoutez des produits !</li>
                         {% endfor %}
@@ -48,6 +48,29 @@
                     <button type="submit" class="btn btn-primary no-margin">Ajouter</button>
                 </div>
                 {{ form_end(formProduct) }}
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Ajouter un produit existant</h2>
+                </div>
+                {% for category in categories %}
+                    <div class="col-sm-4" id="category-{{ category.id }}">
+                        <div class="list">
+                            <div class="list-header">
+                                {{ category.name }}
+                            </div>
+                            <div class="list-content">
+                                <ul>
+                                    {% for product in category.products %}
+                                        {% if list.products.contains(product) == false %}
+                                            <li class="addExistingProduct" data-id="{{ product.id }}">{{ product.name }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
