@@ -3,6 +3,8 @@ Shopping List
 
 Shopping List allow you to create easily your shopping lists. This is how to install the project.
 
+*(This was a little test for a job.)*
+
 Clone the repository
 =============
 
